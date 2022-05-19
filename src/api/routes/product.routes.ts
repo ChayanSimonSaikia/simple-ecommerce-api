@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { imageUpload } from "../../utils/muterConfig";
 import {
   addProductHandler,
   addToCartHandler,
@@ -24,7 +25,7 @@ router.post(
   "/addProduct",
   requireLogin,
   isAdmin,
-  validateResources(productSchema),
+  imageUpload.single("image"),
   addProductHandler
 );
 

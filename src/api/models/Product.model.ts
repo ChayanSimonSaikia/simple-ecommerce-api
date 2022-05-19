@@ -15,6 +15,7 @@ export class Stock {
   @prop({ required: true, min: 0 })
   quantity: number;
 }
+
 class ProductDetails {
   @prop({
     required: true,
@@ -25,9 +26,12 @@ class ProductDetails {
 
   @prop({ required: true })
   desc: string;
+
+  @prop({ required: true })
+  image: string;
 }
 
-// TODO: Add category and Images
+// TODO: Add category
 @modelOptions({ options: { allowMixed: Severity.ALLOW } })
 export class Product {
   @prop({ auto: true })

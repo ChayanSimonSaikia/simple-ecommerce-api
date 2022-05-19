@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import createHttpError from "http-errors";
 import ProductModel, { Product } from "../models/Product.model";
-import { User } from "../models/User.model";
 import { CartInput, ProductInput } from "../schema/product.schema";
 import { findUserById } from "../services/auth.service";
 import {
@@ -13,11 +12,15 @@ import {
 } from "../services/product.service";
 
 export const addProductHandler = async (
-  req: Request<{}, {}, ProductInput>,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  const file = req.file;
+  if (!file) return next(new createHttpError.BadRequest("Image is required"));
+
   try {
+    req.body.imageUrl = file.filename;
     await addProduct(req.body);
     res.json({ message: "Product added to the shop" });
   } catch (error) {

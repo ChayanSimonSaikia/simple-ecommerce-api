@@ -1,8 +1,16 @@
 import ProductModel from "../models/Product.model";
 import { ProductInput } from "../schema/product.schema";
 
-export const addProduct = (input: ProductInput) => {
-  return ProductModel.create(input);
+export const addProduct = (input: ProductInput & { imageUrl: string }) => {
+  const product = new ProductModel({
+    productDetails: {
+      name: input.name,
+      desc: input.desc,
+      image: input.imageUrl,
+    },
+    stock: { quantity: input.quantity, price: input.price, size: input.size },
+  });
+  return product.save();
 };
 
 export const findTotalProducts = () => {
